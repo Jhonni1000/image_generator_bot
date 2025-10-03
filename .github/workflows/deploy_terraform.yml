@@ -69,6 +69,7 @@ jobs:
                 TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
               run: |
                 echo "New webhook URL: $TELEGRAM_WEBHOOK_URL"
+                echo $TELEGRAM_WEBHOOK_URL
                 CURRENT_URL=$(curl -s "https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/getWebhookInfo" | jq -r '.result.url')
                 echo "Current webhook URL: $CURRENT_URL"
                 if [ "$CURRENT_URL" != "$TELEGRAM_WEBHOOK_URL" ]; then

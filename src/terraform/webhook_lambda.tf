@@ -40,7 +40,7 @@ resource "aws_iam_role_policy" "webhook_lambda_role" {
 
 resource "aws_lambda_function" "webhook_lambda" {
     function_name = "telegram-webhook-lambda"
-    runtime = "Python3.9"
+    runtime = "python3.9"
     role = aws_iam_role.webhook_lambda_role.arn
     handler = "lambda_function.lambda_handler"
 

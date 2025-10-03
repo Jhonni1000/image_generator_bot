@@ -42,7 +42,7 @@ resource "aws_lambda_function" "webhook_lambda" {
     function_name = "telegram-webhook-lambda"
     runtime = "python3.9"
     role = aws_iam_role.webhook_lambda_role.arn
-    handler = "lambda_function.lambda_handler"
+    handler = "webhook_lambda.lambda_handler"
 
     filename = data.archive_file.telegram_webhook_zip.output_path
     source_code_hash = data.archive_file.telegram_webhook_zip.output_base64sha256

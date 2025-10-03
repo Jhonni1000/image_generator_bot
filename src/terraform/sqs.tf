@@ -1,12 +1,12 @@
 resource "aws_sqs_queue" "request_queue" {
   name                       = "telegram_requests_queue"
   delay_seconds              = 90
-  max_message_size           = 2048
+  max_message_size           = 262124
   message_retention_seconds  = 86400
   receive_wait_time_seconds  = 10
   visibility_timeout_seconds = 30
 
-  redrive_allow_policy = jsonencode({
+  redrive_policy = jsonencode({
     deadLetterTargetArn = aws_sqs_queue.request_DLQ_queue.arn
     maxReceiveCount     = 4
   })

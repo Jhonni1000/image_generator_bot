@@ -14,7 +14,7 @@ resource "aws_apigatewayv2_integration" "image_generator_bot" {
 
 resource "aws_apigatewayv2_route" "image_generator_bot" {
   api_id    = aws_apigatewayv2_api.image_generator_bot.id
-  route_key = "POST/webhook"
+  route_key = "POST /webhook"
   target    = "integrations/${aws_apigatewayv2_integration.image_generator_bot.id}"
 }
 

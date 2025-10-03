@@ -53,8 +53,7 @@ jobs:
             - name: Get API Gateway URL
               id: get_url
               run: |
-                echo "TELEGRAM_WEBHOOK_URL=$(terraform output -raw telegram_webhook_url)" >> $GITHUB_ENV
-                echo $TELEGRAM_WEBHOOK_URL
+                echo "TELEGRAM_WEBHOOK_URL=$(terraform output -raw telegram_webhook_url)" >> $GITHUB_OUTPUT
 
 
     Telegram_webhook:
@@ -66,14 +65,15 @@ jobs:
               run: sudo apt-get update && sudo apt-get install -y jq
             - name: Set Telegram Webhook if Changed
               env:
-                TELEGRAM_WEBHOOK_URL: ${{ env.TELEGRAM_WEBHOOK_URL }}
+                TELEGRAM_WEBHOOK_URL: ${{ needs.Terraform.outputs.TELEGRAM_WEBHOOK_URL }}
+                TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
               run: |
-                CURRENT_URL=$(curl -s "https://api.telegram.org/bot${{ secrets.TELEGRAM_API_KEY }}/getWebhookInfo" | jq -r '.result.url')
-                echo "Current webhook URL: $CURRENT_URL"
                 echo "New webhook URL: $TELEGRAM_WEBHOOK_URL"
+                CURRENT_URL=$(curl -s "https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/getWebhookInfo" | jq -r '.result.url')
+                echo "Current webhook URL: $CURRENT_URL"
                 if [ "$CURRENT_URL" != "$TELEGRAM_WEBHOOK_URL" ]; then
                     echo "Webhook URL changed. Updating..."
-                    curl -X POST "https://api.telegram.org/bot${{ secrets.TELEGRAM_API_KEY }}/setWebhook" \
+                    curl -X POST "https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/setWebhook" \
                         -d "url=${TELEGRAM_WEBHOOK_URL}"
                 else
                     echo "Webhook URL is the same. No update needed."

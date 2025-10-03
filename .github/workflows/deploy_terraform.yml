@@ -3,7 +3,7 @@ name: Terraform Test Deployment
 on:
     push:
         branches:
-            - test
+            - main
         paths:
             - "src/terraform/**"
     pull_request:

@@ -49,4 +49,31 @@ jobs:
                 terraform plan 
             - name: Terraform Apply
               run: |
-                terraform apply -auto-approve 
+                terraform apply -auto-approve
+            - name: Get API Gateway URL
+              id: get_url
+              run: |
+                echo "TELEGRAM_WEBHOOK_URL=$(terraform output -raw telegram_webhook_url)" >> $GITHUB_ENV
+
+
+    Telegram_webhook:
+        name: Update Telegram Webhook
+        runs-on: ubuntu-latest
+        needs: Terraform
+        steps:
+            - name: Install jq
+              run: sudo apt-get update && sudo apt-get install -y jq
+            - name: Set Telegram Webhook if Changed
+              env:
+                TELEGRAM_WEBHOOK_URL: ${{ env.TELEGRAM_WEBHOOK_URL }}
+              run: |
+                CURRENT_URL=$(curl -s "https://api.telegram.org/bot${{ secrets.TELEGRAM_API_KEY }}/getWebhookInfo" | jq -r '.result.url')
+                echo "Current webhook URL: $CURRENT_URL"
+                echo "New webhook URL: $TELEGRAM_WEBHOOK_URL"
+                if [ "$CURRENT_URL" != "$TELEGRAM_WEBHOOK_URL" ]; then
+                    echo "Webhook URL changed. Updating..."
+                    curl -X POST "https://api.telegram.org/bot${{ secrets.TELEGRAM_API_KEY }}/setWebhook" \
+                        -d "url=${TELEGRAM_WEBHOOK_URL}"
+                else
+                    echo "Webhook URL is the same. No update needed."
+                fi

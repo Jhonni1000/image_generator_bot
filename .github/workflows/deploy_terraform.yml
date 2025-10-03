@@ -54,6 +54,7 @@ jobs:
               id: get_url
               run: |
                 echo "TELEGRAM_WEBHOOK_URL=$(terraform output -raw telegram_webhook_url)" >> $GITHUB_ENV
+                echo $TELEGRAM_WEBHOOK_URL
 
 
     Telegram_webhook:

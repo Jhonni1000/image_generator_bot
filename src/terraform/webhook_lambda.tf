@@ -49,7 +49,7 @@ resource "aws_lambda_function" "webhook_lambda" {
 
     environment {
         variables = {
-            QUEUE_URL = aws_sqs_queue.telegram_queue.url
+            QUEUE_URL = aws_sqs_queue.request_queue.url
         }
     }
 }

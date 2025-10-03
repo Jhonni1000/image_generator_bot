@@ -68,10 +68,9 @@ jobs:
             - name: Set Telegram Webhook if Changed
               env:
                 TELEGRAM_WEBHOOK_URL: ${{ needs.Terraform.outputs.telegram_webhook_url }}
-                TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+                TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_API_KEY }}
               run: |
                 echo "New webhook URL: $TELEGRAM_WEBHOOK_URL"
-                echo $TELEGRAM_WEBHOOK_URL
                 CURRENT_URL=$(curl -s "https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/getWebhookInfo" | jq -r '.result.url')
                 echo "Current webhook URL: $CURRENT_URL"
                 if [ "$CURRENT_URL" != "$TELEGRAM_WEBHOOK_URL" ]; then

@@ -1,9 +1,3 @@
-data "archive_file" "telegram_webhook_zip" {
-    type        = "zip"
-    source_dir  = "${path.module}/../scripts/webhook_lambda"
-    output_path = "${path.module}/../scripts/webhook_lambda.zip"
-}
-
 resource "aws_iam_role" "webhook_lambda_role" {
     name = "webhook_lambda_role"
     assume_role_policy = jsonencode({
@@ -33,7 +27,7 @@ resource "aws_iam_role_policy" "webhook_lambda_role" {
         Statement = [{
             Action = ["sqs:SendMessage"]
             Effect = "Allow"
-            Resource = aws_sqs_queue.request_queue.arn
+            Resource = aws_sqs_queue.request_queue.ar
         }]
     })
 }

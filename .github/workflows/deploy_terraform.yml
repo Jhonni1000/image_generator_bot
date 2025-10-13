@@ -50,8 +50,10 @@ jobs:
               run: |
                 terraform plan 
             - name: Terraform Apply
+              env:
+                TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_API_KEY }}
               run: |
-                terraform apply -auto-approve
+                terraform apply -auto-approve -var "telegram_bot_token=${TELEGRAM_API_KEY}"
             - name: Get API Gateway URL
               id: get_url
               run: |

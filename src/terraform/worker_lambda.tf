@@ -1,3 +1,10 @@
+resource "aws_lambda_layer_version" "requests_layer" {
+  filename   = "${path.module}/../scripts/requests_layer.zip" 
+  layer_name = "requests-layer"
+  compatible_runtimes = ["python3.9"]
+  description = "Python requests library for Lambda"
+}
+
 resource "aws_s3_bucket" "telegram_bot_bucket" {
     bucket = "telegram-bot-bucket-19999"
     object_lock_enabled = true
@@ -95,4 +102,6 @@ resource "aws_lambda_function" "worker_lambda" {
             BEDROCK_MODEL_ID = "arn:aws:bedrock:us-east-1:738605694254:inference-profile/us.stability.stable-image-control-sketch-v1:0"  
         }
     }
+
+    layers = [ aws_lambda_layer_version.requests_layer.arn ]
 }

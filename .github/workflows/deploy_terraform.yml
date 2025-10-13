@@ -47,8 +47,10 @@ jobs:
               run: |
                 terraform init 
             - name: Terraform Plan
+              env:
+                TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_API_KEY }}
               run: |
-                terraform plan 
+                terraform plan -var "telegram_bot_token=${TELEGRAM_API_KEY}"
             - name: Terraform Apply
               env:
                 TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_API_KEY }}

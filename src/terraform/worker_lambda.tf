@@ -67,12 +67,12 @@ resource "aws_iam_policy" "worker_lambda_role_policy" {
     })
 }
 
-resource "aws_iam_role_policy_attachment" "worker_lambda_role_policy" {
+resource "aws_iam_role_policy_attachment" "worker_lambda_role_policy1" {
     role = aws_iam_role.worker_lambda_role.name
     policy_arn = aws_iam_policy.worker_lambda_role_policy.arn
 }
 
-resource "aws_iam_role_policy_attachment" "worker_lambda_role_policy" {
+resource "aws_iam_role_policy_attachment" "worker_lambda_role_policy2" {
     role = aws_iam_role.worker_lambda_role.name
     policy_arn = "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
 }

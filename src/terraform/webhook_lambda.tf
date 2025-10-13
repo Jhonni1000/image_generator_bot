@@ -33,7 +33,7 @@ resource "aws_iam_role_policy" "webhook_lambda_role" {
         Statement = [{
             Action = ["sqs:SendMessage"]
             Effect = "Allow"
-            Resource = aws_lambda_function.webhook_lambda.arn
+            Resource = aws_sqs_queue.request_queue.arn
         }]
     })
 }

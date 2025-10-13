@@ -13,8 +13,17 @@ def lambda_handler(event, context):
     try:
         print("Received event:", event)
 
-        # API Gateway v2 wraps the Telegram payload in a string body
-        body = json.loads(event.get("body", "{}"))
+        body = event.get("body")
+
+        # Handle both string and dict body types
+        if isinstance(body, str):
+            body = json.loads(body)
+        elif isinstance(body, dict):
+            # already parsed by API Gateway test event
+            pass
+        else:
+            raise ValueError("Invalid body format")
+
         print("Parsed Telegram Update:", json.dumps(body))
 
         chat_id = None
@@ -46,12 +55,12 @@ def lambda_handler(event, context):
 
         return {
             "statusCode": 200,
-            "body": json.dumps({"ok": True})  # always string
+            "body": json.dumps({"ok": True})
         }
 
     except Exception as e:
         print("Error:", str(e))
         return {
             "statusCode": 200,
-            "body": json.dumps({"error": str(e)})  # ensure string
+            "body": json.dumps({"error": str(e)})
         }

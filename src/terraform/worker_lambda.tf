@@ -68,6 +68,16 @@ resource "aws_iam_policy" "worker_lambda_role_policy" {
                     aws_s3_bucket.telegram_bot_bucket.arn, 
                     "${aws_s3_bucket.telegram_bot_bucket.arn}/*" 
                 ]
+            },
+
+            {
+                Sid = "SQSPolicy",
+                Effect = "Allow",
+                Action = [
+                    "sqs:ReceiveMessage",
+                    "sqs:GetMessage"
+                ],
+                Resource = aws_sqs_queue.request_queue.arn
             }
         
         ]

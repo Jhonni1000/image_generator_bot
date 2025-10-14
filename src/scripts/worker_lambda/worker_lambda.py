@@ -8,7 +8,7 @@ from botocore.exceptions import ClientError
 
 TELEGRAM_BOT_TOKEN = os.environ["TELEGRAM_BOT_TOKEN"]
 S3_BUCKET = os.environ["S3_BUCKET"]
-REGION = os.environ.get("AWS_REGION", "us-east-1")
+REGION = os.environ.get("AWS_REGION")
 BEDROCK_MODEL_ID = os.environ["BEDROCK_MODEL_ID"]  
 
 s3 = boto3.client("s3")

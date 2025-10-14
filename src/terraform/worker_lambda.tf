@@ -104,5 +104,14 @@ resource "aws_lambda_function" "worker_lambda" {
         }
     }
 
+    reserved_concurrent_executions = 5
+    
     layers = [ aws_lambda_layer_version.requests_layer.arn ]
+}
+
+resource "aws_lambda_event_source_mapping" "worker_lambda_trigger" {
+    event_source_arn = aws_sqs_queue.request_queue.arn
+    function_name = aws_lambda_function.worker_lambda.function_name
+    batch_size = 1
+    enabled = true
 }

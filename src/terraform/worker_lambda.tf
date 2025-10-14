@@ -75,7 +75,8 @@ resource "aws_iam_policy" "worker_lambda_role_policy" {
                 Effect = "Allow",
                 Action = [
                     "sqs:ReceiveMessage",
-                    "sqs:GetMessage"
+                    "sqs:DeleteMessage",
+                    "sqs:GetQueueAttributes"
                 ],
                 Resource = aws_sqs_queue.request_queue.arn
             }

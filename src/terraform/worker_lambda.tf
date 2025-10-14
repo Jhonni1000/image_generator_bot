@@ -100,7 +100,7 @@ resource "aws_lambda_function" "worker_lambda" {
             TELEGRAM_BOT_TOKEN = var.telegram_bot_token
             S3_BUCKET = aws_s3_bucket.telegram_bot_bucket.bucket
             REGION = var.aws_region
-            BEDROCK_MODEL_ID = "arn:aws:bedrock:us-east-1:738605694254:inference-profile/us.stability.stable-image-control-sketch-v1:0"  
+            BEDROCK_MODEL_ID = "amazon.titan-image-generator-v2:0"  
         }
     }
 

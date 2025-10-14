@@ -104,8 +104,6 @@ resource "aws_lambda_function" "worker_lambda" {
         }
     }
 
-    reserved_concurrent_executions = 5
-    
     layers = [ aws_lambda_layer_version.requests_layer.arn ]
 }
 

@@ -122,7 +122,6 @@ def create_presigned_url(bucket_name: str, object_key: str, expiration: int = 36
         print("❌ Error generating presigned URL:", e)
         return "Error creating URL."
 
-
 def send_telegram_message(chat_id: int, text: str):
     """
     Sends a plain text message back to the user via Telegram.

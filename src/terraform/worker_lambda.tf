@@ -102,6 +102,7 @@ resource "aws_lambda_function" "worker_lambda" {
     role = aws_iam_role.worker_lambda_role.arn
     handler = "worker_lambda.lambda_handler"
     timeout = 60
+    reserved_concurrent_executions = 5
 
     filename = data.archive_file.telegram_worker_zip.output_path
     source_code_hash = data.archive_file.telegram_worker_zip.output_base64sha256

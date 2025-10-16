@@ -1,7 +1,6 @@
-resource "aws_iam_role" "webhook_lambda_role" {
-    name = "webhook_lambda_role"
-    assume_role_policy = jsonencode({
-        Version = "2012-10-17",
+locals {
+  assume_policy = {
+    Version = "2012-10-17",
         Statement = [{
             Action = "sts:AssumeRole",
             Effect = "Allow",
@@ -9,8 +8,12 @@ resource "aws_iam_role" "webhook_lambda_role" {
                 Service = "lambda.amazonaws.com"
             }
         }]
+  }
+}
 
-    })
+resource "aws_iam_role" "webhook_lambda_role" {
+    name = "webhook_lambda_role"
+    assume_role_policy = jsonencode(local.assume_policy)
 }
 
 resource "aws_iam_role_policy_attachment" "webhook_lambda_role" {
@@ -37,6 +40,7 @@ resource "aws_lambda_function" "webhook_lambda" {
     runtime = "python3.9"
     role = aws_iam_role.webhook_lambda_role.arn
     handler = "webhook_lambda.lambda_handler"
+    timeout = 60
 
     filename = data.archive_file.telegram_webhook_zip.output_path
     source_code_hash = data.archive_file.telegram_webhook_zip.output_base64sha256

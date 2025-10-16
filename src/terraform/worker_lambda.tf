@@ -31,16 +31,7 @@ resource "aws_s3_bucket_object_lock_configuration" "telegram_bot_bucket" {
 
 resource "aws_iam_role" "worker_lambda_role" {
     name = "worker_lambda_role"
-    assume_role_policy = jsonencode({
-        Version = "2012-10-17",
-        Statement = [{
-            Action = "sts:AssumeRole",
-            Principal = {
-                Service = "lambda.amazonaws.com"
-            },
-            Effect = "Allow"
-        }]
-    })
+    assume_role_policy = jsonencode(local.assume_policy)
 }
 
 resource "aws_iam_policy" "worker_lambda_role_policy" {

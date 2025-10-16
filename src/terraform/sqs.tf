@@ -1,3 +1,12 @@
+locals {
+  sqs_details = {
+    message_size = 262144
+    message_retention = 86400
+    receive_wait_time = 10
+    visibility_timeout = 60
+  }
+}
+
 # Dead Letter Queue
 resource "aws_sqs_queue" "request_DLQ_queue" {
   name = "telegram_requests_queue_DLQ"
@@ -6,10 +15,10 @@ resource "aws_sqs_queue" "request_DLQ_queue" {
 # Main Queue
 resource "aws_sqs_queue" "request_queue" {
   name                       = "telegram_requests_queue"
-  max_message_size           = 262144
-  message_retention_seconds  = 86400
-  receive_wait_time_seconds  = 10
-  visibility_timeout_seconds = 60
+  max_message_size           = local.sqs_details.message_size
+  message_retention_seconds  = local.sqs_details.message_retention
+  receive_wait_time_seconds  = local.sqs_details.receive_wait_time
+  visibility_timeout_seconds = local.sqs_details.visibility_timeout
 
   redrive_policy = jsonencode({
     deadLetterTargetArn = aws_sqs_queue.request_DLQ_queue.arn

@@ -1,7 +1,7 @@
 # AI Image Generator Telegram Bot
 
 This project is a Telegram bot that generates AI-powered images based on user prompts.
-It is built using AWS Lambda, API Gateway, SQS, Bedrock FMs (Stable Diffusion), and S3 for scalable, serverless image generation.
+It is built using AWS Lambda, API Gateway, SQS, Bedrock FMs (Amazon Titan), and S3 for scalable, serverless image generation.
 
 ## Features
 

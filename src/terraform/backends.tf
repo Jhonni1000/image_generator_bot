@@ -14,7 +14,7 @@ terraform {
     bucket = "telegram-image-generator-backend-19999"
     key    = "dev/terraform.tfstate"
     region = "us-east-1"
-    #dynamodb_table = "terraform-state-locks"
-    #encrypt = true
+    dynamodb_table = "terraform-state-locks"
+    encrypt = true
   }
 }

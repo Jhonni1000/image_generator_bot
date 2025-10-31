@@ -1,6 +1,6 @@
 resource "aws_dynamodb_table" "state-lock" {
   name = "terraform-state-locks"
-  billing_mode = "PAY-PER-REQUEST"
+  billing_mode = "PAY_PER_REQUEST"
   hash_key = "LockId"
 
   attribute {

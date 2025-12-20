@@ -28,11 +28,11 @@ jobs:
             run:
                 working-directory: ${{ env.TF_WORKING_DIR }}
         steps:
+            - name: Checkout Code
+              uses: actions/checkout@v4
             - name: Debug OIDC environment
               run: |
                 env | grep ACTIONS || true
-            - name: Checkout Code
-              uses: actions/checkout@v4
             - name: Debug AWS Identity
               run: |
                 aws sts get-caller-identity

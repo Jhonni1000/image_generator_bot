@@ -21,7 +21,7 @@ env:
 jobs:
     Terraform:
         name: Terraform Test Deployment
-        runs-on: ubuntu-latest
+        runs-on: self-hosted
         outputs:
             telegram_webhook_url: ${{ steps.get_url.outputs.TELEGRAM_WEBHOOK_URL }}
         defaults:
